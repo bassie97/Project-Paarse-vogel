@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=height\ width
+comment0.target=SimulatorView(int,\ int)
+comment0.text=\r\n\ Create\ a\ view\ of\ the\ given\ width\ and\ height.\r\n\ @param\ height\ The\ simulation's\ height.\r\n\ @param\ width\ \ The\ simulation's\ width.\r\n
+comment1.params=animalClass\ color
+comment1.target=void\ setColor(java.lang.Class,\ java.awt.Color)
+comment1.text=\r\n\ Define\ a\ color\ to\ be\ used\ for\ a\ given\ class\ of\ animal.\r\n\ @param\ animalClass\ The\ animal's\ Class\ object.\r\n\ @param\ color\ The\ color\ to\ be\ used\ for\ the\ given\ class.\r\n
+comment2.params=animalClass
+comment2.target=java.awt.Color\ getColor(java.lang.Class)
+comment2.text=\r\n\ @return\ The\ color\ to\ be\ used\ for\ a\ given\ class\ of\ animal.\r\n
+numComments=3

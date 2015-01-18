@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=
+comment0.target=FieldStats()
+comment0.text=\r\n\ Construct\ a\ FieldStats\ object.\r\n
+comment1.params=
+comment1.target=void\ reset()
+comment1.text=\r\n\ Invalidate\ the\ current\ set\ of\ statistics;\ reset\ all\ \r\n\ counts\ to\ zero.\r\n
+comment2.params=animalClass
+comment2.target=void\ incrementCount(java.lang.Class)
+comment2.text=\r\n\ Increment\ the\ count\ for\ one\ class\ of\ animal.\r\n\ @param\ animalClass\ The\ class\ of\ animal\ to\ increment.\r\n
+comment3.params=
+comment3.target=void\ countFinished()
+comment3.text=\r\n\ Indicate\ that\ an\ animal\ count\ has\ been\ completed.\r\n
+numComments=4
