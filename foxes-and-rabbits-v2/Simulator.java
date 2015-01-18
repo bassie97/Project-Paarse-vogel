@@ -66,6 +66,11 @@ public class Simulator
         reset();
     }
     
+    public static void main(String[] args){
+        Simulator s = new Simulator();
+        s.simulate(500);
+    }
+    
     /**
      * Run the simulation from its current state for a reasonably long period,
      * (4000 steps).
