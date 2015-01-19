@@ -66,6 +66,9 @@ public class Simulator
         reset();
     }
     
+    /**
+     * De main van onze project.
+     */
     public static void main(String[] args){
         Simulator s = new Simulator();
         s.simulate(500);
