@@ -24,9 +24,13 @@ public class SimulatorView extends JFrame
 
     private final String STEP_PREFIX = "Step: ";
     private final String POPULATION_PREFIX = "Population: ";
+    private final String BUTTON_PREFIX = "1 stap: ";
     private JLabel stepLabel, population;
+    public JButton eenStap;
+    public JButton honderdStappen;
     private FieldView fieldView;
-    
+    private Simulator simulator;
+
     // A map for storing colors for participants in the simulation
     private Map<Class, Color> colors;
     // A statistics object computing and storing simulation information
@@ -45,19 +49,41 @@ public class SimulatorView extends JFrame
         setTitle("Fox and Rabbit Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
-        
+
         setLocation(100, 50);
-        
+
         fieldView = new FieldView(height, width);
+
+        // Maakt een "toolbar" links aan.
+        JPanel toolbar = new JPanel();
+        toolbar.setLayout(new GridLayout(0, 1));
+        // maakt button in de toolbar
+        eenStap = new JButton("1 stap vooruit");
+        // voegt de button toe aan de toolbar
+        toolbar.add(eenStap);
+
+        honderdStappen = new JButton("100 stappen vooruit");
+        toolbar.add(honderdStappen);
+        // maakt een flow layout panel. Dit is nodig voor de toolbar.
+        JPanel flow = new JPanel();
+        // voegt de toolbar toe aan de flow layout
+        flow.add(toolbar);
 
         Container contents = getContentPane();
         contents.add(stepLabel, BorderLayout.NORTH);
         contents.add(fieldView, BorderLayout.CENTER);
         contents.add(population, BorderLayout.SOUTH);
+        // voegt de flowlayout toe aan de contentspane.
+        contents.add(flow, BorderLayout.WEST);
+        // methode om menu 1, 2 en help te maken.
+        createMenuBar();
+
         pack();
+
         setVisible(true);
+
     }
-    
+
     /**
      * Define a color to be used for a given class of animal.
      * @param animalClass The animal's Class object.
@@ -93,10 +119,10 @@ public class SimulatorView extends JFrame
         if(!isVisible()) {
             setVisible(true);
         }
-            
+
         stepLabel.setText(STEP_PREFIX + step);
         stats.reset();
-        
+
         fieldView.preparePaint();
 
         for(int row = 0; row < field.getDepth(); row++) {
@@ -125,7 +151,21 @@ public class SimulatorView extends JFrame
     {
         return stats.isViable(field);
     }
-    
+
+    /**
+     * methode om een menu bar te creëren.
+     */
+    public void createMenuBar(){
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+        JMenu menu1 = new JMenu("Menu 1");
+        menuBar.add(menu1);
+        JMenu menu2 = new JMenu("Menu 2");
+        menuBar.add(menu2);
+        JMenu help = new JMenu("Help");
+        menuBar.add(help);
+    }
+
     /**
      * Provide a graphical view of a rectangular field. This is 
      * a nested class (a class defined inside a class) which
@@ -160,7 +200,7 @@ public class SimulatorView extends JFrame
         public Dimension getPreferredSize()
         {
             return new Dimension(gridWidth * GRID_VIEW_SCALING_FACTOR,
-                                 gridHeight * GRID_VIEW_SCALING_FACTOR);
+                gridHeight * GRID_VIEW_SCALING_FACTOR);
         }
 
         /**
@@ -184,7 +224,7 @@ public class SimulatorView extends JFrame
                 }
             }
         }
-        
+
         /**
          * Paint on grid location on this field in a given color.
          */
