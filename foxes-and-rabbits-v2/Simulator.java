@@ -122,7 +122,7 @@ public class Simulator
         for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
             Animal animal = it.next();
             animal.act(newAnimals);
-            if(! animal.isAlive()) {
+            if(! animal.isActive()) {
                 it.remove();
             }
         }

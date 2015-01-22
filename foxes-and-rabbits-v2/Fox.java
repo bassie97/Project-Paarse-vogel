@@ -65,7 +65,7 @@ public class Fox extends Animal
     {
         incrementAge();
         incrementHunger();
-        if(isAlive()) {
+        if(isActive()) {
             giveBirth(newFoxes);            
             // Move towards a source of food if found.
             Location newLocation = findFood();
@@ -121,7 +121,7 @@ public class Fox extends Animal
             Object animal = field.getObjectAt(where);
             if(animal instanceof Rabbit) {
                 Rabbit rabbit = (Rabbit) animal;
-                if(rabbit.isAlive()) { 
+                if(rabbit.isActive()) { 
                     rabbit.setDead();
                     foodLevel = RABBIT_FOOD_VALUE;
                     // Remove the dead rabbit from the field.
