@@ -37,6 +37,7 @@ public class Simulator implements Runnable
     private SimulatorView view;
     private static Thread thread;
     private volatile boolean suspend = false;
+    private boolean start = false;
 
     /**
      * Construct a simulation field with default size.
@@ -79,8 +80,11 @@ public class Simulator implements Runnable
         view.honderdStappen.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) 
                 {
-                   thread.start();
-                   suspend = false;
+                	start = true;
+                	suspend = false;
+                	notify();
+                   
+                   
                 }
             });
         view.stopen.addActionListener(new ActionListener() {
@@ -95,29 +99,22 @@ public class Simulator implements Runnable
     }
     
     public void run(){
-    	while(true){
-    		try{
-    			runLongSimulation();
-    			if(suspend){
-    				synchronized(this){
-    					while(suspend){
-    						wait();
-    					}
+    	try{
+    		while(start == true){
+    		for(int i=0; i<100; i++){
+    			simulateOneStep();
+    			synchronized (this){
+    				while(suspend){
+    					wait();
     				}
     			}
     		}
-    		catch(Exception s){
-    			
-    		}
-    		view.repaint();
+    		}		
+    	} catch(Exception e){
+    		System.out.println("test");
     	}
     }
     
-    
-    public synchronized void resume(){
-    	suspend = false;
-    	notify();
-    }
 
     /**
      * Run the simulation from its current state for a reasonably long period,
@@ -212,7 +209,8 @@ public class Simulator implements Runnable
      * De main van onze project.
      */
     public static void main(String[] args){
-    	thread = new Thread(new Simulator());        
+    	thread = new Thread(new Simulator());
+    	thread.start();
     }
 
 }
