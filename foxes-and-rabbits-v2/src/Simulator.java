@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class Simulator
+public class Simulator implements Runnable
 {
     // Constants representing configuration information for the simulation.
     // The default width for the grid.
@@ -35,6 +35,8 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
+    private static Thread thread;
+    private boolean start = false;
 
     /**
      * Construct a simulation field with default size.
@@ -77,16 +79,25 @@ public class Simulator
         view.honderdStappen.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) 
                 {
-                    simulate(100);
+                	start = true;
+                   thread.start();
                 }
-            });    
+            });
+        view.stopen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) 
+            {
+            	start = false;
+            }
+        });
 
         // Setup a valid starting point.
         reset();
     }
-
-    public void actionPerformed(ActionEvent e){
-        simulateOneStep();
+    
+    public void run(){
+    	while(start == true){
+    		simulateOneStep();
+    	}
     }
 
     /**
@@ -182,7 +193,7 @@ public class Simulator
      * De main van onze project.
      */
     public static void main(String[] args){
-        new Simulator();        
+    	thread = new Thread(new Simulator());        
     }
 
 }

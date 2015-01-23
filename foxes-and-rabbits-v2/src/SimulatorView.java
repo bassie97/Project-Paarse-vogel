@@ -28,6 +28,7 @@ public class SimulatorView extends JFrame
     private JLabel stepLabel, population;
     public JButton eenStap;
     public JButton honderdStappen;
+    public JButton stopen;
     private FieldView fieldView;
     private Simulator simulator;
 
@@ -57,10 +58,16 @@ public class SimulatorView extends JFrame
         // Maakt een "toolbar" links aan.
         JPanel toolbar = new JPanel();
         toolbar.setLayout(new GridLayout(0, 1));
+        
         // maakt button in de toolbar
         eenStap = new JButton("1 stap vooruit");
         // voegt de button toe aan de toolbar
         toolbar.add(eenStap);
+        
+        // maakt button in de toolbar
+        stopen = new JButton("stopen");
+        // voegt de button toe aan de toolbar
+        toolbar.add(stopen);	
 
         honderdStappen = new JButton("100 stappen vooruit");
         toolbar.add(honderdStappen);
