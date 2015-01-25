@@ -33,7 +33,7 @@ public abstract class Animal implements Actor
      * whatever it wants/needs to do.
      * @param newAnimals A list to receive newly born animals.
      */
-    abstract public void act(List<Animal> newAnimals);
+    abstract public void act(List<Actor> newAnimals);
 
     /**
      * Check whether the animal is alive or not.
@@ -62,7 +62,7 @@ public abstract class Animal implements Actor
      * Return the animal's location.
      * @return The animal's location.
      */
-    protected Location getLocation()
+    public Location getLocation()
     {
         return location;
     }
@@ -71,7 +71,7 @@ public abstract class Animal implements Actor
      * Place the animal at the new location in the given field.
      * @param newLocation The animal's new location.
      */
-    protected void setLocation(Location newLocation)
+    public void setLocation(Location newLocation)
     {
         if(location != null) {
             field.clear(location);
@@ -84,7 +84,7 @@ public abstract class Animal implements Actor
      * Return the animal's field.
      * @return The animal's field.
      */
-    protected Field getField()
+    public Field getField()
     {
         return field;
     }

@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public class SimulatorView extends JFrame
 {
+	
+	
     // Colors used for empty locations.
     private static final Color EMPTY_COLOR = Color.white;
 
@@ -28,9 +30,14 @@ public class SimulatorView extends JFrame
     private JLabel stepLabel, population;
     public JButton eenStap;
     public JButton honderdStappen;
-    public JButton stopen;
+    public JButton jachtSeizoen;
+    public JButton start;
+    public JButton stop;
+    public JButton simulationSpeed;
     private FieldView fieldView;
     private Simulator simulator;
+    
+
 
     // A map for storing colors for participants in the simulation
     private Map<Class, Color> colors;
@@ -44,6 +51,7 @@ public class SimulatorView extends JFrame
      */
     public SimulatorView(int height, int width)
     {
+    	setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         stats = new FieldStats();
         colors = new LinkedHashMap<Class, Color>();
 
@@ -58,23 +66,36 @@ public class SimulatorView extends JFrame
         // Maakt een "toolbar" links aan.
         JPanel toolbar = new JPanel();
         toolbar.setLayout(new GridLayout(0, 1));
-        
+        // Creates start simulation button
+        start = new JButton("Start doorlopende simulatie");
+        start.setHorizontalAlignment(SwingConstants.LEFT);
+        toolbar.add(start);
+        // Creates stop simulation button
+        stop = new JButton("Stop simulatie");
+        stop.setHorizontalAlignment(SwingConstants.LEFT);
+        toolbar.add(stop);
+        // Creates simulation speed button
+        simulationSpeed = new JButton("Simulatie snelheid");
+        simulationSpeed.setHorizontalAlignment(SwingConstants.LEFT);
+        toolbar.add(simulationSpeed);
         // maakt button in de toolbar
         eenStap = new JButton("1 stap vooruit");
-        // voegt de button toe aan de toolbar
+        eenStap.setHorizontalAlignment(SwingConstants.LEFT);
         toolbar.add(eenStap);
-        
-        // maakt button in de toolbar
-        stopen = new JButton("stopen");
-        // voegt de button toe aan de toolbar
-        toolbar.add(stopen);	
-
+        // Creates hundersteps button
         honderdStappen = new JButton("100 stappen vooruit");
+        honderdStappen.setHorizontalAlignment(SwingConstants.LEFT);
         toolbar.add(honderdStappen);
         // maakt een flow layout panel. Dit is nodig voor de toolbar.
         JPanel flow = new JPanel();
         // voegt de toolbar toe aan de flow layout
         flow.add(toolbar);
+        // Creates hunting season button
+        jachtSeizoen = new JButton("Open jacht seizoen");
+        jachtSeizoen.setHorizontalAlignment(SwingConstants.LEFT);
+        toolbar.add(jachtSeizoen);
+        
+
 
         Container contents = getContentPane();
         contents.add(stepLabel, BorderLayout.NORTH);

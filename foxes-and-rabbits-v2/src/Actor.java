@@ -7,8 +7,22 @@ import java.util.List;
  */
 public interface Actor
 {
-    abstract void act(List<Animal> newAnimals);
+	public void act(List<Actor> newAnimals);
+	
+	//public void act2(List<Actor> newHunters);
     
-    abstract boolean isActive();
+	//public boolean isActive();
+    
+	//public void setDead();
+ 
+	//public Location getLocation();
+    
+	public void setLocation(Location newLocation);
+
+
+	public boolean isActive();
+    
+	//public Field getField();
+    
 }
 
