@@ -1,6 +1,11 @@
+package view;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
+import simulator.Simulator;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -33,6 +38,7 @@ public class SimulatorView extends JFrame
     public JButton jachtSeizoen;
     public JButton start;
     public JButton stop;
+    public JButton spreadPlague;
     public JButton simulationSpeed;
     private FieldView fieldView;
     private Simulator simulator;
@@ -94,6 +100,10 @@ public class SimulatorView extends JFrame
         jachtSeizoen = new JButton("Open jacht seizoen");
         jachtSeizoen.setHorizontalAlignment(SwingConstants.LEFT);
         toolbar.add(jachtSeizoen);
+        // Creates spread plague button
+        spreadPlague = new JButton("Spread the plague");
+        spreadPlague.setHorizontalAlignment(SwingConstants.LEFT);
+        toolbar.add(spreadPlague);
         
 
 

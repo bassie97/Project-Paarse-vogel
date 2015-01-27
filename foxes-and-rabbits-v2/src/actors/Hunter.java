@@ -1,5 +1,9 @@
+package actors;
 import java.util.Iterator;
 import java.util.List;
+
+import view.Field;
+import view.Location;
 
 public class Hunter implements Actor {
 	
@@ -160,7 +164,7 @@ public class Hunter implements Actor {
          * Indicate that the animal is no longer alive.
          * It is removed from the field.
          */
-        private void setGone()
+        void setGone()
         {
             active = false;
             if(location != null) {

@@ -1,3 +1,5 @@
+package simulator;
+
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
@@ -5,6 +7,16 @@ import java.util.Iterator;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import view.Field;
+import view.Location;
+import view.SimulatorView;
+import actors.Actor;
+import actors.Bear;
+import actors.Fox;
+import actors.Hunter;
+import actors.Plague;
+import actors.Rabbit;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field containing
@@ -27,6 +39,8 @@ public class Simulator implements Runnable {
 	private static final double BEAR_CREATION_PROBABILITY = 0.005;
 	// The probability that a hunter will be created in any given grid position.
 	private static final double HUNTER_CREATION_PROBABILITY = 0.005;
+	// The probability that a plague will be created in any given grid position.
+	private static final double PLAGUE_CREATION_PROBABILITY = 0.0001;
 
 	// List of animals in the field.
 	private List<Actor> animals;
@@ -50,6 +64,8 @@ public class Simulator implements Runnable {
 	private int numberOfSteps = 100;
 	// Boolean trigger for adding hunter to simulation
 	private boolean addHunter;
+	// Boolean trigger for adding plague to simulation
+	private boolean addPlague;
 	// Delay in MS between steps
 	private int stepDelay = 50;
 	// Counter used to count how many times simulation speed has been changed
@@ -87,6 +103,7 @@ public class Simulator implements Runnable {
 		view.setColor(Fox.class, Color.blue);
 		view.setColor(Bear.class, Color.red);
 		view.setColor(Hunter.class, Color.MAGENTA);
+		view.setColor(Plague.class, Color.green);
 
 		view.start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -104,6 +121,7 @@ public class Simulator implements Runnable {
 		view.eenStap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				suspend = true;
+				threadSleep(100);
 				simulateOneStep();
 			}
 		});
@@ -123,6 +141,11 @@ public class Simulator implements Runnable {
 		view.simulationSpeed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				simulationSpeed();
+			}
+		});
+		view.spreadPlague.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addPlague = true;
 			}
 		});
 
@@ -224,9 +247,15 @@ public class Simulator implements Runnable {
 	public void simulateOneStep() {
 		step++;
 
-		if (addHunter == true) {
+		if (addHunter) {
 			startHuntingSeason();
 			addHunter = false;
+			view.repaint();
+		}
+
+		if (addPlague) {
+			startPlague();
+			addPlague = false;
 			view.repaint();
 		}
 
@@ -299,6 +328,22 @@ public class Simulator implements Runnable {
 					Location location = new Location(row, col);
 					Hunter hunter = new Hunter(true, field, location);
 					animals.add(hunter);
+				}
+
+		}
+	}
+
+	/**
+	 * Adds plague to the simulation.
+	 */
+	public void startPlague() {
+		Random rand = Randomizer.getRandom();
+		for (int row = 0; row < field.getDepth(); row++) {
+			for (int col = 0; col < field.getWidth(); col++)
+				if (rand.nextDouble() <= PLAGUE_CREATION_PROBABILITY) {
+					Location location = new Location(row, col);
+					Plague plague = new Plague(true, field, location);
+					animals.add(plague);
 				}
 
 		}

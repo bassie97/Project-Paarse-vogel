@@ -1,5 +1,8 @@
+package view;
 import java.awt.Color;
 import java.util.HashMap;
+
+import simulator.Counter;
 
 /**
  * This class collects and provides some statistical data on the state 
@@ -39,13 +42,15 @@ public class FieldStats
         }
         for(Class key : counters.keySet()) {
             Counter info = counters.get(key);
-            buffer.append(info.getName());
+            String actor =info.getName();
+            actor = actor.substring(7);
+            buffer.append(actor);
             buffer.append(": ");
             buffer.append(info.getCount());
             buffer.append(' ');
         }
         return buffer.toString();
-    }
+    } 
     
     /**
      * Invalidate the current set of statistics; reset all 

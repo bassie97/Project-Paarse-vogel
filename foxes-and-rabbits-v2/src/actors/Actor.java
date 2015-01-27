@@ -1,3 +1,6 @@
+package actors;
+import view.*;
+
 import java.util.List;
 /**
  * Write a description of class Actor here.
@@ -5,7 +8,7 @@ import java.util.List;
  * @author () 
  * @version (a version number or a date)
  */
-public interface Actor
+public interface Actor 
 {
 	public void act(List<Actor> newAnimals);
 	

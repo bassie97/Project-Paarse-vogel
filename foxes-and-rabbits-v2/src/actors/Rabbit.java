@@ -1,5 +1,13 @@
+package actors;
+
+
+
 import java.util.List;
 import java.util.Random;
+
+import simulator.Randomizer;
+import view.Field;
+import view.Location;
 
 /**
  * A simple model of a rabbit.
