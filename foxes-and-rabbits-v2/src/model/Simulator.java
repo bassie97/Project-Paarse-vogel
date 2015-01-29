@@ -1,22 +1,9 @@
-package simulator;
+package model;
 
-import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.*;
 
-import view.Field;
-import view.Location;
+
 import view.SimulatorView;
-import actors.Actor;
-import actors.Bear;
-import actors.Fox;
-import actors.Hunter;
-import actors.Plague;
-import actors.Rabbit;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field containing
@@ -25,7 +12,7 @@ import actors.Rabbit;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class Simulator implements Runnable {
+public class Simulator extends AbstractModel implements Runnable {
 	// Constants representing configuration information for the simulation.
 	// The default width for the grid.
 	private static final int DEFAULT_WIDTH = 120;
@@ -70,12 +57,21 @@ public class Simulator implements Runnable {
 	private int stepDelay = 50;
 	// Counter used to count how many times simulation speed has been changed
 	private int timesPressed = 0;
+	private FieldStats stats;
 
 	/**
 	 * Construct a simulation field with default size.
 	 */
 	public Simulator() {
 		this(DEFAULT_DEPTH, DEFAULT_WIDTH);
+
+       // config = new Config();
+       // animals = new ArrayList<Actor>();
+       // field = new Field(DEFAULT_WIDTH, DEFAULT_DEPTH);
+        //stats = new FieldStats();
+        // Setup a valid starting point.
+      //  reset();
+
 	}
 
 	/**
@@ -87,69 +83,20 @@ public class Simulator implements Runnable {
 	 *            Width of the field. Must be greater than zero.
 	 */
 	public Simulator(int depth, int width) {
+
+		//populate();
 		if (width <= 0 || depth <= 0) {
 			System.out.println("The dimensions must be greater than zero.");
 			System.out.println("Using default values.");
 			depth = DEFAULT_DEPTH;
 			width = DEFAULT_WIDTH;
 		}
-
+		thread = new Thread(this);
 		animals = new ArrayList<Actor>();
 		field = new Field(depth, width);
+		stats = new FieldStats();
 
-		// Create a view of the state of each location in the field.
-		view = new SimulatorView(depth, width);
-		view.setColor(Rabbit.class, Color.orange);
-		view.setColor(Fox.class, Color.blue);
-		view.setColor(Bear.class, Color.red);
-		view.setColor(Hunter.class, Color.MAGENTA);
-		view.setColor(Plague.class, Color.green);
 
-		view.start.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				startThread();
-				numberStepsSet = false;
-			}
-		});
-
-		view.stop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				suspend = true;
-			}
-		});
-
-		view.eenStap.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				suspend = true;
-				threadSleep(100);
-				simulateOneStep();
-			}
-		});
-
-		view.honderdStappen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				simulateHundredSteps();
-			}
-		});
-
-		view.jachtSeizoen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addHunter = true;
-			}
-		});
-
-		view.simulationSpeed.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				simulationSpeed();
-			}
-		});
-		view.spreadPlague.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addPlague = true;
-			}
-		});
-
-		// Setup a valid starting point.
 		reset();
 	}
 
@@ -157,11 +104,14 @@ public class Simulator implements Runnable {
 	 * Starts or resumes the thread.
 	 */
 	public void startThread() {
+		numberStepsSet = false;
 		if (!thread.isAlive()) {
-			thread.start();
+			 thread.start();
+
 		} else {
 			resume();
 		}
+		
 	}
 
 	/**
@@ -239,6 +189,12 @@ public class Simulator implements Runnable {
 		startThread();
 		numberStepsSet = true;
 	}
+	
+	public void simulateSingleStep(){
+		suspend = true;
+		threadSleep(100);
+		simulateOneStep();
+	}
 
 	/**
 	 * Run the simulation from its current state for a single step. Iterate over
@@ -275,8 +231,11 @@ public class Simulator implements Runnable {
 		// Add the newly born foxes and rabbits to the main lists.
 		animals.addAll(newAnimals);
 
-		view.showStatus(step, field);
+		super.showStatusAll();
+
+		
 	}
+
 
 	/**
 	 * Reset the simulation to a starting position.
@@ -284,10 +243,12 @@ public class Simulator implements Runnable {
 	public void reset() {
 		step = 0;
 		animals.clear();
-		populate();
-
+		populate();	
 		// Show the starting state in the view.
-		view.showStatus(step, field);
+		super.showStatusAll();
+		
+		
+		
 	}
 
 	/**
@@ -311,7 +272,6 @@ public class Simulator implements Runnable {
 					Bear bear = new Bear(true, field, location);
 					animals.add(bear);
 				}
-
 				// else leave the location empty.
 			}
 		}
@@ -372,10 +332,25 @@ public class Simulator implements Runnable {
 	}
 
 	/**
-	 * The main method.
+	 * Get field
+	 * @return field
 	 */
-	public static void main(String[] args) {
-		thread = new Thread(new Simulator());
+	public Field getField() {
+		return field;
 	}
 
+	public int getStep(){
+		
+		return step;
+	}
+	
+	public FieldStats getFieldStats(){
+		return stats;
+		
+	}
+	
+	public void suspend(){
+		suspend=true;
+		
+	}
 }

@@ -1,12 +1,8 @@
-package actors;
+package model;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
-import simulator.Randomizer;
-import view.Field;
-import view.Location;
 
 public class Plague implements Actor {
 

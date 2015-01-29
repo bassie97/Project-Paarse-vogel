@@ -1,9 +1,6 @@
-package actors;
+package model;
 import java.util.Iterator;
 import java.util.List;
-
-import view.Field;
-import view.Location;
 
 public class Hunter implements Actor {
 	

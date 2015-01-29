@@ -1,4 +1,4 @@
-package actors;
+package model;
 import view.*;
 
 import java.util.List;

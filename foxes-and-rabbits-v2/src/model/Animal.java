@@ -1,11 +1,8 @@
-package actors;
+package model;
 
 
 
 import java.util.List;
-
-import view.Field;
-import view.Location;
 
 /**
  * A class representing shared characteristics of animals.
